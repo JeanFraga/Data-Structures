@@ -1,6 +1,6 @@
-import sys
-sys.path.append('../GitHub/Data-Structures/doubly_linked_list')
-from doubly_linked_list import ListNode
+# import sys
+# sys.path.append('../GitHub/Data-Structures/doubly_linked_list')
+# from doubly_linked_list import ListNode
 from doubly_linked_list import DoublyLinkedList
 
 class LRUCache:
@@ -15,8 +15,11 @@ class LRUCache:
         self.limit = limit
         # self.node = ListNode(0)
         # self.dll = DoublyLinkedList(self.node)
+        # self.size = 0
         self.dll = DoublyLinkedList()
-        self.dict = {}
+        self.dict = dict()
+
+
 
     """
     Retrieves the value associated with the given key. Also
@@ -26,11 +29,21 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-        if self.dict.get(key) is None:
+        # if self.dict.get(key) is None:
+        #     return None
+
+        if key not in self.dict:
             return None
-        else:
-            self.dll.move_to_front(self.dict.get(key))
-            return self.dll.head.value
+        # if key in self.dict:
+        # self.dll.move_to_end(self.dict[key].value)
+        # return self.dict[key].value
+        node = self.dict[key]
+        self.dll.move_to_end(node)
+        # print(node[1])
+        return node.value[1]
+        # return
+        # else:
+        #     return None
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -43,16 +56,47 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
-        if len(self.dict) == self.limit:
-            self.dll.remove_from_tail()
+        # if len(self.dict) == self.limit:
+        #     self.dll.remove_from_tail()
+        # if key in self.dict:
+        #     self.get(key)
+        #     self.dict[key] = value
+        #     self.dll
+        #     self.dll.head.value = value
+        # else:
+        #     self.dll.add_to_head(value)
+        #     self.dict.update({key:value})
+
+        #  Different scenarios
+        # if itme/key already exists
         if key in self.dict:
-            self.get(key)
-            self.dict[key] = value
-            self.dll
-            self.dll.head.value = value
-        else:
-            self.dll.add_to_head(value)
-            self.dict.update({key:value})
+            # overwrite the value
+            # where is the value stored?
+            self.dict[key].value = (key, value)
+            node = self.dict[key]
+            # print(node)
+            # node = (key, value)
+            # move to the tail (most recently used)
+            self.dll.move_to_end(node)
+            return
+        # size is at limit
+        if len(self.dll) == self.limit:
+            # evict the oldest one
+            index_of_oldest = self.dll.head.value[0]
+            # print(index_of_oldest)
+            del self.dict[index_of_oldest]
+            self.dll.remove_from_head()
+            # add the new new one to the end
+
+        # size is not at limit
+        # if len(self.dll) < self.limit:
+        # add to order
+        self.dll.add_to_tail((key, value))
+        # add it to storage
+        # print(self.dll.tail)
+        self.dict[key] = self.dll.tail
+
+
 
         # self.dict.update({key:1})
         # if key in self.dict:
@@ -71,4 +115,4 @@ class LRUCache:
 # lru = LRUCache()
 # lru.set("k", 5)
 # lru.get("k")
-# print(lru.dict)
+# print(lru.get("k"))
