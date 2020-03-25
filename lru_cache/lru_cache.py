@@ -1,3 +1,8 @@
+import sys
+sys.path.append('../GitHub/Data-Structures/doubly_linked_list')
+from doubly_linked_list import ListNode
+from doubly_linked_list import DoublyLinkedList
+
 class LRUCache:
     """
     Our LRUCache class keeps track of the max number of nodes it
@@ -7,7 +12,11 @@ class LRUCache:
     to every node stored in the cache.
     """
     def __init__(self, limit=10):
-        pass
+        self.limit = limit
+        # self.node = ListNode(0)
+        # self.dll = DoublyLinkedList(self.node)
+        self.dll = DoublyLinkedList()
+        self.dict = {}
 
     """
     Retrieves the value associated with the given key. Also
@@ -17,7 +26,11 @@ class LRUCache:
     key-value pair doesn't exist in the cache.
     """
     def get(self, key):
-        pass
+        if self.dict.get(key) is None:
+            return None
+        else:
+            self.dll.move_to_front(self.dict.get(key))
+            return self.dll.head.value
 
     """
     Adds the given key-value pair to the cache. The newly-
@@ -30,4 +43,32 @@ class LRUCache:
     the newly-specified value.
     """
     def set(self, key, value):
-        pass
+        if len(self.dict) == self.limit:
+            self.dll.remove_from_tail()
+        if key in self.dict:
+            self.get(key)
+            self.dict[key] = value
+            self.dll
+            self.dll.head.value = value
+        else:
+            self.dll.add_to_head(value)
+            self.dict.update({key:value})
+
+        # self.dict.update({key:1})
+        # if key in self.dict:
+        #     # do a get() and then keep size same
+        #     self.get(key)
+        # self.dll.add_to_head({key:value})
+        # self.dict[key] = value
+        # if self.size > 10:
+        #     self.storage.remove_from_tail()
+            # self.dll.add_to_head({key:value})
+
+
+# import sys
+# sys.path.append('../GitHub/Data-Structures/lru_cache')
+# from lru_cache import LRUCache
+# lru = LRUCache()
+# lru.set("k", 5)
+# lru.get("k")
+# print(lru.dict)
