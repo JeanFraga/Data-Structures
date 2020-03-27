@@ -9,6 +9,8 @@ class BinarySearchTree:
         self.value = value
         self.left = None
         self.right = None
+        self.dll_stack = Stack()
+        self.dll_queue = Queue()
     # Insert the given value into the tree
     def insert(self, value):
         if self.value is None:
@@ -78,13 +80,45 @@ class BinarySearchTree:
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
-    def in_order_print(self, node):
-        pass
+    def in_order_print(self, node=None):
+        # if node == None:
+        #     node = BinarySearchTree()
+        # if node.value == None:
+        #     return None
+        # node.dll_stack.push(node.value)
+        # if node.left != None:
+        #     while node.left != None:
+        #         node.in_order_print(node)
+        #     print(node.value)
+        #     node.dll_stack.pop()
+        # print(node.dll_stack.tail)
+        # node.dll_stack.pop()
+        if node: 
+  
+            # First recur on left child 
+            node.in_order_print(node.left)
+    
+            # then print the data of node 
+            print(node.value)
+    
+            # now recur on right child 
+            node.in_order_print(node.right)
+        # print('\n')
+        
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        if node: 
+    
+            # First recur on left child 
+            printPostorder(nodeleft) 
+    
+            # the recur on right child 
+            printPostorder(node.right) 
+    
+            # now print the data of node 
+            print(node.val), 
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
@@ -101,3 +135,18 @@ class BinarySearchTree:
     # Print Post-order recursive DFT
     def post_order_dft(self, node):
         pass
+
+# import sys
+# sys.path.append('../GitHub/Data-Structures/binary_search_tree')
+# from binary_search_tree import BinarySearchTree
+
+# bst = BinarySearchTree(1)
+# bst.insert(8)
+# bst.insert(5)
+# bst.insert(7)
+# bst.insert(6)
+# bst.insert(3)
+# bst.insert(4)
+# bst.insert(2)
+
+# bst.in_order_print(bst)
