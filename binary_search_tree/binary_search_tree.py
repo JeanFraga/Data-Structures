@@ -95,13 +95,10 @@ class BinarySearchTree:
         # node.dll_stack.pop()
         if node: 
   
-            # First recur on left child 
             node.in_order_print(node.left)
     
-            # then print the data of node 
             print(node.value)
     
-            # now recur on right child 
             node.in_order_print(node.right)
         # print('\n')
         
@@ -109,32 +106,47 @@ class BinarySearchTree:
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        if node: 
-    
-            # First recur on left child 
-            printPostorder(nodeleft) 
-    
-            # the recur on right child 
-            printPostorder(node.right) 
-    
-            # now print the data of node 
-            print(node.val), 
+        q = Queue()
+        q.enqueue(self)
+        while q.len() > 0:
+            node_current = q.dequeue()
+            print(node_current.value)
+            if node_current.left:
+                q.enqueue(node_current.left)
+            if node_current.right:
+                q.enqueue(node_current.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        st = Stack()
+        st.push(self)
+        while st.len() > 0:
+            node_current = st.pop()
+            print(node_current.value)
+            if node_current.left:
+                st.push(node_current.left)
+            if node_current.right:
+                st.push(node_current.right)
 
     # STRETCH Goals -------------------------
     # Note: Research may be required
 
     # Print Pre-order recursive DFT
     def pre_order_dft(self, node):
-        pass
+        print(self.value)
+        if self.left:
+            self.left.pre_order_dft(self.left)
+        if self.right:
+            self.right.pre_order_dft(self.right)
 
     # Print Post-order recursive DFT
-    def post_order_dft(self, node):
-        pass
+    def post_order_dft(self, node=None):
+        if self.left:
+            self.left.post_order_dft()
+        if self.right:
+            self.right.post_order_dft()
+        print(self.value)
 
 # import sys
 # sys.path.append('../GitHub/Data-Structures/binary_search_tree')
